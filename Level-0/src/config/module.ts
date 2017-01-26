@@ -3,9 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
-import { APP_BASE_HREF } from '@angular/common';
 import { NgReduxModule } from 'ng2-redux';
-import { MaterialModule } from '@angular/material';
 import { AngularFireModule } from 'angularfire2';
 import { MomentModule } from 'angular2-moment';
 import { StoreModule } from '../store';
@@ -24,7 +22,6 @@ import { EqualValidator } from '../directives/equal-validator.directive';
     , HttpModule
     , NgReduxModule
     , StoreModule
-    , MaterialModule.forRoot()
     , AngularFireModule.initializeApp(appConfig.config.firebaseConfig, appConfig.config.firebaseAuthConfig)
     , MomentModule
   ]

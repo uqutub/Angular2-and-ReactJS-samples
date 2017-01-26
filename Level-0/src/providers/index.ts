@@ -1,4 +1,3 @@
-import { DomSanitizationService } from './iconSanitizer';
 import { HttpService } from './http';
 import { AuthGuardService } from './authGuard';
 import { FirebaseService } from './firebase';
@@ -9,7 +8,6 @@ export const providers: any[] = [
     , AuthGuardService
     , FirebaseService
     , ToastService
-    , DomSanitizationService
 ]
 
 export {
@@ -17,5 +15,4 @@ export {
     , AuthGuardService
     , FirebaseService
     , ToastService
-    , DomSanitizationService
 }

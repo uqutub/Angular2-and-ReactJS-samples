@@ -98,7 +98,7 @@ export class MemberEpics {
         action$.ofType(MemberActions.DELSTUDENT)
             .switchMap(({payload}) => {
                 console.log('del studnet epics ', payload)
-                return false;
+                return Observable.of(null);
             })
 
 
@@ -107,8 +107,7 @@ export class MemberEpics {
         action$.ofType(MemberActions.DELCOMPANY)
             .switchMap(({payload}) => {
                console.log('del company epics ', payload)
-               return false;
-
+               return Observable.of(null);
             })
 
 

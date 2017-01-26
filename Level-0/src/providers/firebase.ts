@@ -24,30 +24,7 @@ export class FirebaseService {
         return this.ref.update(multipath);
     } // saveMultipath
 
-    getPushRef(path) {
-        return this.ref.child(path).push();
-    }
-
-    uploadImageOnStorageBase64(path, image: string): Promise<string> {
-        return new Promise(res => {
-            this.storage.child(path).putString(image, 'base64')
-                .then((snapshot) => {
-                    console.log('Uploaded a base64 string!');
-                    // The promise will resolve with a Download URL provided by Firebase Storage
-                    res(snapshot.downloadURL);
-                });
-        });
-    }
-
-    uploadImageOnStorageBlob(path, blob): Promise<string> {
-        return new Promise(res => {
-            this.storage.child(path).put(blob).then((snapshot) => {
-                console.log('Uploaded a blob or file!');
-                // The promise will resolve with a Download URL provided by Firebase Storage
-                res(snapshot.downloadURL);
-            })
-        });
-    }
+ 
 
 }
 
