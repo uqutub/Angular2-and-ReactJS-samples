@@ -1,0 +1,67 @@
+<div class="container">
+	<h1>Sigin-up</h1>
+	<hr>
+	<form novalidate #f="ngForm" (ngSubmit)="onSubmit(f.valid, f.value)">
+
+		<div class="form-group" *ngIf="(isLoggedin$ | async) && ((user$ | async)?.type === 'admin')">
+			<label for="type">Select Type: </label>
+			<select #type="ngModel" name="type" [(ngModel)]="model.type" id="type" class="form-control">
+				<option value="student">Student</option>
+				<option value="company">Company</option>
+			</select>
+		</div>
+
+		<div class="form-group" [ngClass]="{'has-error': !username.valid || username.pristine}">
+			<label for="username" *ngIf="model.type == 'student'">User Id: </label>
+			<label for="username" *ngIf="model.type == 'company'">Company Unique Id: </label>
+			<input #username="ngModel" name="firusernametname" pattern="[a-z0-9]{3,20}" [(ngModel)]="model.uid" [placeholder]="(model.type == 'company') ? 'Company id' : 'User id'"
+				required type="text" class="form-control" id="username">
+			<small [hidden]="!username.errors?.pattern || (username.pristine && !f._submitted)" class="alert alert-danger">
+            	Lowercase-alpha numeric only - length 3 to 20.
+			</small>
+		</div>
+
+		<div class="form-group" [ngClass]="{'has-error': !firstname.valid || firstname.pristine}">
+			<label for="firstname" *ngIf="model.type == 'student'">First Name: </label>
+			<label for="firstname" *ngIf="model.type == 'company'">Company Name: </label>
+			<input #firstname="ngModel" name="firstname" [(ngModel)]="model.fname" [placeholder]="(model.type == 'company') ? 'Company name' : 'First name'" required type="text" class="form-control"
+				id="firstname">
+		</div>
+
+		<div class="form-group" [ngClass]="{'has-error': !lastname.valid || lastname.pristine}">
+			<label for="lastname" *ngIf="model.type == 'student'">Last Name: </label>
+			<label for="lastname" *ngIf="model.type == 'company'">Contact Person: </label>
+			<input #lastname="ngModel" name="lastname" [(ngModel)]="model.lname"[placeholder]="(model.type == 'company') ? 'Company name' : 'Last name'" required type="text" class="form-control"
+				id="lastname">
+		</div>
+
+		<div class="form-group" [ngClass]="{'has-error': !email.valid || email.pristine}">
+			<label for="email">Email address: </label>
+			<input #email="ngModel" name="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" [(ngModel)]="model.eml" placeholder="Email"
+				required type="email" class="form-control" id="email">
+			<small [hidden]="!email.errors?.pattern || (email.pristine && !f._submitted)" class="text-danger">
+				Please type a valid email.
+			</small>
+		</div>
+
+		<div class="form-group" [ngClass]="{'has-error': !password.valid || password.pristine}">
+			<label for="pwd">Password:</label>
+			<input #password="ngModel" name="password" [(ngModel)]="model.pwd" placeholder="Password" minlength="5" required type="password"
+				class="form-control" id="pwd">
+			<small [hidden]="password.valid || (password.pristine && !f._submitted)" class="text-danger">     
+				Min. Password Length is 5
+			</small>
+		</div>
+
+		<!--<div class="checkbox">
+			<label><input type="checkbox"> Remember me</label>
+		</div>
+		<button routerLink="/forgot" class="md-button" md-button>FORGOT PASSWORD</button>
+		-->
+
+		<div class="margin-bottom20px">
+			<button type="submit" class="btn btn-default">Submit</button>
+			<a class="pull-right" [routerLink]="['/signin']">Signin?</a>
+		</div>
+	</form>
+</div>

@@ -1,0 +1,3 @@
+<nav-bar [isLoggedin]="isLoggedin$ | async" [user]="user$ | async" (logoutFire)="logoutFireHandler($event)">Loading NavBar</nav-bar>
+<router-outlet></router-outlet>
+

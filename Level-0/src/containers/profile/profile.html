@@ -1,0 +1,56 @@
+<div class="container">
+    <h1>Profile</h1>
+    <hr>
+    <div class="row">
+        <form novalidate #f="ngForm" (ngSubmit)="onSubmit(f.valid, f.value)">
+            <div class="col-md-6">
+                <div class="form-group" [ngClass]="{'has-error': !firstname.valid || firstname.pristine}">
+                    <label for="firstname" *ngIf="model.type == 'student'">First Name: </label>
+                    <label for="firstname" *ngIf="model.type == 'company'">Company Name: </label>
+                    <input #firstname="ngModel" name="firstname" [(ngModel)]="model.fname" [placeholder]="(model.type == 'company') ? 'Company name' : 'First name'" required type="text" class="form-control" id="firstname">
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group" [ngClass]="{'has-error': !lastname.valid || lastname.pristine}">
+                    <label for="lastname" *ngIf="model.type == 'student'">Last Name: </label>
+                    <label for="lastname" *ngIf="model.type == 'company'">Contact Person: </label>
+                    <input #lastname="ngModel" name="lastname" [(ngModel)]="model.lname" [placeholder]="(model.type == 'company') ? 'Company name' : 'Last name'" required type="text" class="form-control" id="lastname">
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group" [ngClass]="{'has-error': !contact.valid || contact.pristine}">
+                    <label for="contact">Contact #: </label>
+                    <input #contact="ngModel" name="contact" [(ngModel)]="model.contact" placeholder="Contact #" required type="text" class="form-control" id="contact">
+                </div>
+            </div>
+            <div class="col-md-6" *ngIf="model.type == 'company'">
+                <div class="form-group" [ngClass]="{'has-error': !address.valid || address.pristine}">
+                    <label for="address">Company Address: </label>
+                    <input #address="ngModel" name="address" [(ngModel)]="model.address" placeholder="Company Address" required type="text" class="form-control" id="address">
+                </div>
+            </div>
+            <div class="col-md-6" *ngIf="model.type == 'student'">
+                <div class="form-group" [ngClass]="{'has-error': !year.valid || year.pristine}">
+                    <label for="year">Year: </label>
+                    <input #year="ngModel" name="year" [(ngModel)]="model.year" placeholder="e.g. 2014" required type="number" class="form-control" id="year">
+                </div>
+            </div>
+            <div class="col-md-6" *ngIf="model.type == 'student'">
+                <div class="form-group" [ngClass]="{'has-error': !gpa.valid || gpa.pristine}">
+                    <label for="gpa">GPA: </label>
+                    <input #gpa="ngModel" name="gpa" [(ngModel)]="model.gpa" placeholder="e.g. 5.5" required type="number" class="form-control" id="gpa">
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group" [ngClass]="{'has-error': !desc.valid || desc.pristine}">
+                    <label for="desc">{{(model.type == 'company' ? 'About Your Company' : 'About Yourself')}} </label>
+                    <textarea #desc="ngModel" name="desc" [(ngModel)]="model.desc" placeholder="about..." required class="form-control" id="desc">
+                    </textarea>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <button type="submit" class="btn btn-primary">Update</button>
+            </div>
+        </form>
+    </div>
+</div>

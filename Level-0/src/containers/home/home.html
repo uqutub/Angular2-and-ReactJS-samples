@@ -1,0 +1,272 @@
+<div class="padding15px">
+    <h1>HOME...</h1>
+    <div class="row">
+        <div class="col-md-6" *ngIf="(user$ | async)?.type == 'student'">
+            <h3>Vacancies</h3>
+            <hr>
+            <div *ngFor="let post of keysP(posts$ | async); let i = index;">
+                <div class="panel-group">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <div>
+                                <h4 class="panel-title inlineblock">
+                                    <a data-toggle="collapse" [href]="'#' + (posts$ | async)[post]['$key']"> {{(posts$ | async)[post]['title']}} </a>
+                                </h4>
+                                <span class="pull-right" *ngIf="(posts$ | async)[post]?.name">
+                                    from: {{(posts$ | async)[post]?.name}} <i class="text-success">{{checkApplied(post) == 'Applied' ? ' / Applied' : null}}</i>
+                                </span>
+                            </div>
+                        </div>
+                        <div [id]="(posts$ | async)[post]['$key']" class="panel-collapse collapse">
+                            <div class="panel-body ">
+                                {{(posts$ | async)[post]['description']}}
+                                <pre>
+                                    {{(posts$ | async)[post] | json}} 
+                                </pre>
+                            </div>
+                            <div class="panel-footer">
+                                <a [href]="'#' + (posts$ | async)[post]['$key']" class="fa fa-chevron-up fa-1x" data-toggle="collapse" data-placement="right"
+                                    title="collapse" data-original-title="FA-PLUS-CIRCLE"><i></i></a>
+                                <a (click)="onApply(post)" class="pull-right" *ngIf="checkApplied(post) != 'Applied'"> Apply </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6" *ngIf="(user$ | async)?.type == 'company'">
+            <h3>Students</h3>
+            <hr>
+            <div *ngFor="let member of keys(members$ | async); let i = index;">
+                <div class="panel-group">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <div>
+                                <h4 class="panel-title inlineblock">
+                                    <a data-toggle="collapse" [href]="'#' + (members$ | async)[member]['$key']"> {{(members$ | async)[member]['fname']}} - {{(members$ | async)[member]['lname']}}</a>
+                                </h4>
+                                <span class="pull-right">
+                                    {{(members$ | async)[member]?.year}} / {{(members$ | async)[member]?.gpa}}
+                                </span>
+                            </div>
+                        </div>
+                        <div [id]="(members$ | async)[member]['$key']" class="panel-collapse collapse">
+                            <div class="panel-body ">
+                                <div>
+                                    <label for="desc">About Student: </label>
+                                    <label id="desc">{{(members$ | async)[member]?.desc}}  </label>
+                                </div>
+                                <div>
+                                    <label for="year">Year: </label>
+                                    <label id="year">{{(members$ | async)[member]?.year}}  </label>
+                                </div>
+                                <div>
+                                    <label for="gpa">GPA: </label>
+                                    <label id="gpa">{{(members$ | async)[member]?.gpa}}  </label>
+                                </div>
+                                <div>
+                                    <label for="contact">Contact: </label>
+                                    <label id="contact">{{(members$ | async)[member]?.contact}}  </label>
+                                </div>
+                                <div>
+                                    <label for="eml">Email: </label>
+                                    <label id="eml">{{(members$ | async)[member]?.eml}}  </label>
+                                </div>
+
+                            </div>
+                            <div class="panel-footer">
+                                <a [href]="'#' + (members$ | async)[member]['$key']" class="fa fa-chevron-up fa-1x" data-toggle="collapse" data-placement="right"
+                                    title="collapse" data-original-title="FA-PLUS-CIRCLE"><i></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="col-md-6" *ngIf="(user$ | async)?.type == 'student'">
+            <h3>Companies</h3>
+            <hr>
+            <div *ngFor="let member of keys(members$ | async); let i = index;">
+                <div class="panel-group">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a data-toggle="collapse" [href]="'#' + (members$ | async)[member]['$key']"> {{(members$ | async)[member]['fname']}} </a>
+                            </h4>
+                        </div>
+                        <div [id]="(members$ | async)[member]['$key']" class="panel-collapse collapse">
+                            <div class="panel-body ">
+                                <div>
+                                    <label for="desc">About Company: </label>
+                                    <label id="desc">{{(members$ | async)[member]?.desc}}  </label>
+                                </div>
+                                <div>
+                                    <label for="person">Contact Person: </label>
+                                    <label id="person">{{(members$ | async)[member]?.lname}}  </label>
+                                </div>
+                                <div>
+                                    <label for="address">Address: </label>
+                                    <label id="address">{{(members$ | async)[member]?.address}}  </label>
+                                </div>
+                                <div>
+                                    <label for="contact">Contact: </label>
+                                    <label id="contact">{{(members$ | async)[member]?.contact}}  </label>
+                                </div>
+                                <div>
+                                    <label for="eml">Email: </label>
+                                    <label id="eml">{{(members$ | async)[member]?.eml}}  </label>
+                                </div>
+
+                            </div>
+                            <div class="panel-footer">
+                                <a [href]="'#' + (members$ | async)[member]['$key']" class="fa fa-chevron-up fa-1x" data-toggle="collapse" data-placement="right"
+                                    title="collapse" data-original-title="FA-PLUS-CIRCLE"><i></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+        <!--<div class="col-md-4">
+            4
+
+        </div>-->
+    </div>
+
+    <div class="row" *ngIf="(user$ | async)?.type == 'admin'">
+        <div class="col-md-4">
+            <h3>Companies</h3>
+            <hr>
+            <div *ngFor="let member of keysC(companies$ | async); let i = index;">
+                <div class="panel-group">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a data-toggle="collapse" [href]="'#' + (companies$ | async)[member]['$key']"> {{(companies$ | async)[member]['fname']}} </a>
+                            </h4>
+                        </div>
+                        <div [id]="(companies$ | async)[member]['$key']" class="panel-collapse collapse">
+                            <div class="panel-body ">
+                                <div>
+                                    <label for="desc">About Company: </label>
+                                    <label id="desc">{{(companies$ | async)[member]?.desc}}  </label>
+                                </div>
+                                <div>
+                                    <label for="person">Contact Person: </label>
+                                    <label id="person">{{(companies$ | async)[member]?.lname}}  </label>
+                                </div>
+                                <div>
+                                    <label for="address">Address: </label>
+                                    <label id="address">{{(companies$ | async)[member]?.address}}  </label>
+                                </div>
+                                <div>
+                                    <label for="contact">Contact: </label>
+                                    <label id="contact">{{(companies$ | async)[member]?.contact}}  </label>
+                                </div>
+                                <div>
+                                    <label for="eml">Email: </label>
+                                    <label id="eml">{{(companies$ | async)[member]?.eml}}  </label>
+                                </div>
+
+                            </div>
+                            <div class="panel-footer">
+                                <a [href]="'#' + (companies$ | async)[member]['$key']" class="fa fa-chevron-up fa-1x" data-toggle="collapse" data-placement="right"
+                                    title="collapse" data-original-title="FA-PLUS-CIRCLE"><i></i></a>
+                                <a (click)="delCompany(member)" class="fa fa-trash fa-1x" data-toggle="collapse" data-placement="right" title="trash" data-original-title="FA-PLUS-CIRCLE"><i></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="col-md-4">
+            <h3>Vacancies</h3>
+            <hr>
+            <div *ngFor="let post of keysV(posts$ | async); let i = index;">
+                <div class="panel-group">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <div>
+                                <h4 class="panel-title inlineblock">
+                                    <a data-toggle="collapse" [href]="'#' + (posts$ | async)[post]['$key']"> {{(posts$ | async)[post]['title']}} </a>
+                                </h4>
+                                <span class="pull-right" *ngIf="(posts$ | async)[post]?.name">
+                                    from: {{(posts$ | async)[post]?.name}} / &nbsp; <span class="pull-right label" [ngClass]="{'label-warning': appliedCount(post) == 0, 'label-info': appliedCount(post) != 0  }">
+                                    <i> {{appliedCount(post)}}</i>
+                                </span>
+                                </span>
+                                
+                            </div>
+                        </div>
+                        <div [id]="(posts$ | async)[post]['$key']" class="panel-collapse collapse">
+                            <div class="panel-body ">
+                                {{(posts$ | async)[post]['description']}}
+                            </div>
+                            <div class="panel-footer">
+                                <a [href]="'#' + (posts$ | async)[post]['$key']" class="fa fa-chevron-up fa-1x" data-toggle="collapse" data-placement="right"
+                                    title="collapse" data-original-title="FA-PLUS-CIRCLE"><i></i></a>
+                                <a (click)="delVacancy(post)" class="fa fa-trash fa-1x" data-toggle="collapse" data-placement="right" title="trash" data-original-title="FA-PLUS-CIRCLE"><i></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <h3>Students</h3>
+            <hr>
+            <div *ngFor="let member of keysS(students$ | async); let i = index;">
+                <div class="panel-group">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <div>
+                                <h4 class="panel-title inlineblock">
+                                    <a data-toggle="collapse" [href]="'#' + (students$ | async)[member]['$key']"> {{(students$ | async)[member]['fname']}} - {{(students$ | async)[member]['lname']}}</a>
+                                </h4>
+                                <span class="pull-right">
+                                    {{(students$ | async)[member]?.year}} / {{(students$ | async)[member]?.gpa}}
+                                </span>
+                            </div>
+                        </div>
+                        <div [id]="(students$ | async)[member]['$key']" class="panel-collapse collapse">
+                            <div class="panel-body ">
+                                <div>
+                                    <label for="desc">About Student: </label>
+                                    <label id="desc">{{(students$ | async)[member]?.desc}}  </label>
+                                </div>
+                                <div>
+                                    <label for="year">Year: </label>
+                                    <label id="year">{{(students$ | async)[member]?.year}}  </label>
+                                </div>
+                                <div>
+                                    <label for="gpa">GPA: </label>
+                                    <label id="gpa">{{(students$ | async)[member]?.gpa}}  </label>
+                                </div>
+                                <div>
+                                    <label for="contact">Contact: </label>
+                                    <label id="contact">{{(students$ | async)[member]?.contact}}  </label>
+                                </div>
+                                <div>
+                                    <label for="eml">Email: </label>
+                                    <label id="eml">{{(students$ | async)[member]?.eml}}  </label>
+                                </div>
+
+                            </div>
+                            <div class="panel-footer">
+                                <a [href]="'#' + (students$ | async)[member]['$key']" class="fa fa-chevron-up fa-1x" data-toggle="collapse" data-placement="right"
+                                    title="collapse" data-original-title="FA-PLUS-CIRCLE"><i></i></a>
+                                <a (click)="delStudent(member)" class="fa fa-trash fa-1x" data-toggle="collapse" data-placement="right" title="trash" data-original-title="FA-PLUS-CIRCLE"><i></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</div>
