@@ -1,0 +1,33 @@
+<div class="container">
+	<h1>Sigin-in</h1>
+	<hr>
+	<form novalidate #f="ngForm" (ngSubmit)="onSubmit(f.valid, f.value, password)">
+		<div class="form-group" [ngClass]="{'has-error': !email.valid || email.pristine}">
+			<label for="email">Email address: </label>
+			<input #email="ngModel" name="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" [(ngModel)]="eml" placeholder="Email"
+	
+				required type="email" class="form-control" id="email">
+			<small [hidden]="!email.errors?.pattern || (email.pristine && !f._submitted)" class="text-danger">
+				Please type a valid email.
+			</small>
+		</div>
+
+		<div class="form-group" [ngClass]="{'has-error': !password.valid || password.pristine}">
+			<label for="pwd">Password:</label>
+			<input #password="ngModel" name="password" [(ngModel)]="pwd" placeholder="Password" minlength="5" required type="password"
+				class="form-control" id="pwd">
+			<small [hidden]="password.valid || (password.pristine && !f._submitted)" class="text-danger">     
+				Min. Password Length is 5
+			</small>
+		</div>
+		<div class="margin-bottom20px">
+			<button type="submit" class="btn btn-default">Submit</button>
+			<a class="pull-right" [routerLink]="['/signup']">Create a Account</a>
+		</div>
+	</form>
+	<div>
+		<h4>Demo id:</h4>
+		<hr> Admin:- <br><span style="text-indent: 15px; display: inline-block;">email: admin@admin.com -- password: !admin123 </span><br> Student:- <br><span style="text-indent: 10px; display: inline-block;">email: student@level0.com -- password: 123456</span>
+<br> Company:- <br> <span style="text-indent: 10px; display: inline-block;">email: company1@level0.com -- password: 123456</span>
+</div>
+</div>
