@@ -1,7 +1,7 @@
 import * as React from "react";
 import SignupComponent from "./../../component/signup/Signup";
 import { connect } from "react-redux";
-import MembersAction from "./../../store/action/member";
+import AuthActions from "./../../store/action/auth";
 
 interface IRMemberProps extends React.Props<any> {
     signup: (obj: Object) => void;
@@ -9,7 +9,7 @@ interface IRMemberProps extends React.Props<any> {
 
 function mapDispatchToProps(dispatch: any) {
     return {
-        signup: (data: Object): void => dispatch(MembersAction.signup(data))
+        signup: (data: Object): void => dispatch(AuthActions.signup(data))
     };
 }
 class Signup extends React.Component<IRMemberProps, any> {

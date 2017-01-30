@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { browserHistory } from 'react-router';
 
 import LoginComponent from '../../component/login/Login';
-import MembersAction from "./../../store/action/member";
+import AuthActions from "./../../store/action/auth";
 
 interface IRMemberProps extends React.Props<any> {
     login: (obj: Object) => void;
@@ -12,12 +12,12 @@ interface IRMemberProps extends React.Props<any> {
 
 function mapStateToProps(state: any) {
     return {
-        isAuthenticated: state.memberReducer['isAuthenticated'],
+        isAuthenticated: state.AuthReducer['isAuthenticated'],
     };
 }
 function mapDispatchToProps(dispatch: any) {
     return {
-        login: (data: Object): void => dispatch(MembersAction.login(data))
+        login: (data: Object): void => dispatch(AuthActions.login(data))
     };
 }
 
@@ -32,12 +32,16 @@ class Login extends React.Component<IRMemberProps, any> {
         this.props.login(state);
     }
 
-    componentWillReceiveProps() { 
-        setTimeout(()=>{
-            if(this.props.isAuthenticated) {
+    _flag = true;
+    componentWillReceiveProps() {
+        setTimeout(() => {
+            if (this.props.isAuthenticated && this._flag) {
+                this._flag = false;
                 browserHistory.push('/home');
+            } else if (!this.props.isAuthenticated && !this._flag) {
+                this._flag = true;
             }
-        }, 0);
+        }, 10);
     }
 
     render() {
@@ -45,6 +49,18 @@ class Login extends React.Component<IRMemberProps, any> {
             <div className="container">
                 <div className="row col-md-5 offset-md-3">
                     <LoginComponent click={this.onLoginClick} />
+                    <br />
+                    <div>
+                        <label>
+                            Admin: admin@admin.com -- Pwd: !admin@123
+                    </label>
+                        <label>
+                            Student: student@level0.com -- Pwd: 123456
+                    </label>
+                        <label>
+                            Admin: company1@level0.com -- Pwd: 123456
+                    </label>
+                    </div>
                 </div>
             </div>
         );

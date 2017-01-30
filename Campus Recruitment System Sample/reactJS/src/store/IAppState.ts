@@ -1,6 +1,6 @@
 // Application State Interface
 interface IAppState {
-    member: Object;
+    AuthReducer: Object;
 }
 
 export default IAppState;

@@ -12,11 +12,7 @@ class SignupComponent extends React.Component<any, any>{
             email: "",
             contact: "",
             address: "",
-            age: "",
-            NIC: "",
-            password: "",
-            location: { lat: 0, lng: 0 },
-            dated: Date.now()
+            password: ""
         }
         this.handlerInput = this.handlerInput.bind(this);
     }
@@ -44,10 +40,6 @@ class SignupComponent extends React.Component<any, any>{
                     <input type="text" className="form-control" id="lastName" name="lastName" onChange={this.handlerInput} autoComplete="off" />
                 </div>
                 <div className="form-group">
-                    <label htmlFor="email">Email address:</label>
-                    <input type="email" className="form-control" id="email" name="email" onChange={this.handlerInput} autoComplete="off" />
-                </div>
-                <div className="form-group">
                     <label htmlFor="contact">Contact:</label>
                     <input type="text" className="form-control" id="contact" name="contact" onChange={this.handlerInput} autoComplete="off" />
                 </div>
@@ -56,18 +48,13 @@ class SignupComponent extends React.Component<any, any>{
                     <input type="text" className="form-control" id="address" name="address" onChange={this.handlerInput} autoComplete="off" />
                 </div>
                 <div className="form-group">
-                    <label htmlFor="age">Age:</label>
-                    <input type="number" className="form-control" id="age" name="age" onChange={this.handlerInput} autoComplete="off" />
-                </div>
-                <div className="form-group">
-                    <label htmlFor="nic">NIC:</label>
-                    <input type="text" className="form-control" id="nic" name="NIC" onChange={this.handlerInput} autoComplete="off" />
+                    <label htmlFor="email">Email address:</label>
+                    <input type="email" className="form-control" id="email" name="email" onChange={this.handlerInput} autoComplete="off" />
                 </div>
                 <div className="form-group">
                     <label htmlFor="pwd">Password:</label>
                     <input type="password" className="form-control" id="pwd" name="password" onChange={this.handlerInput} autoComplete="off" />
                 </div>
-
                 <div>
                     <button type="button" className="btn btn-default" onClick={() => { this.props.click(this.state) } }>Signup</button>
                     <span className="pull-right"><Link className="nav-link" to="/login">Login?</Link></span>

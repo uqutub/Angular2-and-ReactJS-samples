@@ -1,12 +1,22 @@
 import * as React from "react";
 import { Link } from "react-router";
-import { Navbar } from "./../../component/index";
-import MembersAction from "./../../store/action/member";
 import { connect } from "react-redux";
+import { browserHistory } from 'react-router';
+import { Navbar } from "./../../component/index";
+import AuthActions from "./../../store/action/auth";
 
+// for isLoggedin Property from REDUX
+function mapStateToProps(state: any) {
+    return {
+        isAuthenticated: state.AuthReducer['isAuthenticated'],
+    };
+}
+
+// for call isLoggedin
 function mapDispatchToProps(dispatch: any) {
     return {
-        isLoggedin: (): void => dispatch(MembersAction.isLoggedin())
+        isLoggedin: (): void => dispatch(AuthActions.isLoggedin()),
+        logout: (): void => dispatch(AuthActions.logout())
     };
 }
 
@@ -15,28 +25,33 @@ class App extends React.Component<any, any> {
 
     constructor() {
         super();
-
-        this.state = {
-            isQueryPage: false
-        }
-        this.changeStatusHandler = this.changeStatusHandler.bind(this);
         setTimeout(() => {
             this.props.isLoggedin()
-        }, 10)
+        }, 5)
+        this.logoutFunc = this.logoutFunc.bind(this);
     }
 
-    changeStatusHandler(isQueryPage: boolean) {
-        console.log("-----------------------------------==========", isQueryPage)
-        this.setState({
-            isQueryPage
-        })
+
+    _flag = true;
+    componentWillReceiveProps() { 
+        setTimeout(()=>{
+            if(!this.props.isAuthenticated && this._flag) {
+                this._flag = false;
+                browserHistory.push('/login');
+            } else if(this.props.isAuthenticated && !this._flag) {
+                this._flag = true;
+            }
+        }, 5);
+    }
+
+    logoutFunc() {
+        this.props.logout();
     }
 
     render() {
         return (
             <div>
-                <Navbar isQueryPage={this.state.isQueryPage} changeStatus={this.changeStatusHandler} />
-               
+                <Navbar isAuthenticated={this.props.isAuthenticated} logout={this.logoutFunc} />
                 {/* add this for show routes*/}
                 <div style={{ marginTop: '10vh' }}>
                     {this.props.children}
@@ -48,4 +63,4 @@ class App extends React.Component<any, any> {
 }
 
 
-export default connect(null, mapDispatchToProps)(App)
+export default connect(mapStateToProps, mapDispatchToProps)(App)
