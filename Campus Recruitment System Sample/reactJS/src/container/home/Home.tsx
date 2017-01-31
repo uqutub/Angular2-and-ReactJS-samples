@@ -308,9 +308,9 @@ export class Home extends React.Component<IHomeProps, any> {
                                             <div id={'c' + indx.toString()} className="collapse show" role="tabpanel" aria-labelledby="headingOne">
                                                 <div className="card-block">
                                                     Contact Person: {this.props.companies[val].lname} <br />
-                                                    {this.props.companies[val].address.length > 0 && 'Address: ' + this.props.companies[val].address} <br />
-                                                    {this.props.companies[val].contact.toString().length > 0 && 'Contact: ' + this.props.companies[val].contact} <br />
-                                                    'Email: ' {this.props.companies[val].eml}
+                                                    Email:  {this.props.companies[val].eml}
+                                                    {this.props.companies[val].address && this.props.companies[val].address.length > 0 && 'Address: ' + this.props.companies[val].address} <br />
+                                                    {this.props.companies[val].contact && this.props.companies[val].contact.toString().length > 0 && 'Contact: ' + this.props.companies[val].contact} <br />
                                                 </div>
                                             </div>
                                         </div>
