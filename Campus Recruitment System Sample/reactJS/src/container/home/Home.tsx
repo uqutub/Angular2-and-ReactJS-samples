@@ -117,7 +117,7 @@ export class Home extends React.Component<IHomeProps, any> {
 
     isApplied(applied: Object) {
         if (applied && this.keys(applied).length > 0) {
-            return (JSON.stringify(applied).indexOf(this.props.activeUser['cuid'])) ? true : false
+            return (JSON.stringify(applied).indexOf(this.props.activeUser['cuid']) != -1) ? true : false
         } else {
             return false;
         }
@@ -226,9 +226,9 @@ export class Home extends React.Component<IHomeProps, any> {
                                             <div id={'c' + indx.toString()} className="collapse show" role="tabpanel" aria-labelledby="headingOne">
                                                 <div className="card-block">
                                                     Contact Person: {this.props.companies[val].lname} <br />
-                                                    {this.props.companies[val].address.length > 0 && 'Address: ' + this.props.companies[val].address} <br />
-                                                    {this.props.companies[val].contact.toString().length > 0 && 'Contact: ' + this.props.companies[val].contact} <br />
-                                                    'Email: ' {this.props.companies[val].eml}
+                                                    Email:  {this.props.companies[val].eml}
+                                                    {this.props.companies[val].address && this.props.companies[val].address.length > 0 && 'Address: ' + this.props.companies[val].address} <br />
+                                                    {this.props.companies[val].contact && this.props.companies[val].contact.toString().length > 0 && 'Contact: ' + this.props.companies[val].contact} <br />
                                                 </div>
                                             </div>
                                         </div>
@@ -347,7 +347,7 @@ export class Home extends React.Component<IHomeProps, any> {
     onSubmitFunc(ev: any) {
         ev.preventDefault();
         let obj = Object.assign({}, this.state, { company: this.props.activeUser.cuid, name: this.props.activeUser.fname })
-        this.setState({ title: '', description: '', id: '' });
+        console.log('updateddddddd vacancy from compoent, ', obj)
         if (this._isEdit) {
             // update
             this.props.updateVacancy(obj);
@@ -356,6 +356,7 @@ export class Home extends React.Component<IHomeProps, any> {
             delete obj['id'];
             this.props.addVacancy(obj);
         }
+        this.setState({ title: '', description: '', id: '' });
     }
 
     isCompany() {

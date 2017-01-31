@@ -4,11 +4,12 @@ import { browserHistory } from 'react-router'; // http://stackoverflow.com/quest
 
 import AuthActions from "./../action/auth";
 import StudentActions from "./../action/student";
+
+import { FirebaseServie } from '../../service/firebaseService';
 import * as firebase from 'firebase';
 
-
 export default class StudentEpic {
-    static mainRef = firebase.database().ref('/');
+    static mainRef = FirebaseServie.mainRef;
 
     static getVacancies = (action$: ActionsObservable<any>) =>
         action$.ofType(AuthActions.LOGIN_SUCCESS)

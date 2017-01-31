@@ -1,12 +1,11 @@
 import { Action, createAction } from "redux-actions";
 
-import CONFIG from '../../config/index';
-
 export default class AuthActions {
 
     static SIGNUP: string = "SIGNUP";
-    static SIGNUP_SUCCESS: string = "SIGNUP_SUCCESS";
     static SIGNUP_FAILER: string = "SIGNUP_FAILER";
+    static CREATEUSER: string = "CREATEUSER";
+    static SIGNUP_SUCCESS: string = "SIGNUP_SUCCESS";
 
 
     static LOGIN: string = "LOGIN";

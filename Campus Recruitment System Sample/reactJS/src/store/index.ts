@@ -22,6 +22,7 @@ import StudentEpic from "./epic/student";
 // Application Epics / Effects
 export const rootEpic = combineEpics(
     AuthEpic.signupEpic,
+    AuthEpic.createrMemberEpic,
     AuthEpic.loginEpic,
     AuthEpic.isLoggedInEpic,
     AuthEpic.LogoutEpic,
@@ -33,7 +34,8 @@ export const rootEpic = combineEpics(
     StudentEpic.updateVacancyEpics,
     StudentEpic.deleteVacancyEpics,
     StudentEpic.onVacancyEventDeleteEpics,
-    StudentEpic.getAllStudents
+    StudentEpic.getAllStudents,
+
 );
 
 // Application Reducers

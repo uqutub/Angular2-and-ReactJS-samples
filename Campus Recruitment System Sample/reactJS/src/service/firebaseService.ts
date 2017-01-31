@@ -6,6 +6,7 @@ firebase.initializeApp(configiration.firebaseDev);
 export class FirebaseServie {
     static mainRef = firebase.database().ref();
     static storage = firebase.storage().ref();
+    static auth = firebase.auth;
 
     static saveImageToFirebase(location: string, filename: string, file: Object) {
         console.log(FirebaseServie.storage);

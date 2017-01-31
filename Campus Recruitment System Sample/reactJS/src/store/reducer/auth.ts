@@ -5,7 +5,9 @@ const INITIAL_STATE = {
     isError: { status: false, msg: '' },
     isProcessing: false,
     isAuthenticated: false,
-    members: <any>[]
+    isRegistered: false,
+    members: <any>[],
+    counterReg: 0
 }
 
 interface IACTION {
@@ -20,9 +22,10 @@ function AuthReducer(state = INITIAL_STATE, action: IACTION) {
         case AuthActions.SIGNUP:
             return Object.assign({}, state, { isProcessing: true });
         case AuthActions.SIGNUP_SUCCESS:
-            return Object.assign({}, state, { isProcessing: false });
+            return Object.assign({}, state, { isProcessing: false, isRegistered: true, counterReg: state.counterReg+1 });
         case AuthActions.SIGNUP_FAILER:
-            return Object.assign({}, state, { isProcessing: false, activeUser: {} });
+            console.log('SIGNUP_FAILER .....', Object.assign({}, state, { isProcessing: false, isError: action.payload }))
+            return Object.assign({}, state, { isProcessing: false, isError: action.payload });
 
         case AuthActions.LOGIN:
             return Object.assign({}, state, { isProcessing: true });
@@ -36,7 +39,7 @@ function AuthReducer(state = INITIAL_STATE, action: IACTION) {
             return Object.assign({}, state, { isProcessing: true });
 
         case AuthActions.LOGOUT_SUCCESS:
-            return Object.assign({}, state, { isProcessing: false, isAuthenticated: false, activeUser: {}, isError: { status: false, msg: null } });
+            return Object.assign({}, state, { isProcessing: false, isAuthenticated: false, activeUser: {}, counterReg: 0, isError: { status: false, msg: null } });
 
         default:
             return state;

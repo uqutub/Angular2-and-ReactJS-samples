@@ -46,9 +46,12 @@ export default class Navbar extends React.Component<any, any> {
             <nav className="navbar navbar-fixed-top navbar-light bg-faded" style={{ backgroundColor: '#e3f2fd' }}>
                 <Link className="navbar-brand" to="/home">CRS</Link>
                 <ul className="nav navbar-nav">
-                    {/*<li className="nav-item">
-                        <Link className="nav-link" to="/lisssttt">listtt</Link>
-                    </li>*/}
+                    {
+                        this.props.isAuthenticated &&
+                        <li className="nav-item">
+                            <Link className="nav-link" to="/signup">Register Member</Link>
+                        </li>
+                    }
                 </ul>
                 {
                     this.props.isAuthenticated &&

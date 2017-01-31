@@ -35,7 +35,7 @@ class App extends React.Component<any, any> {
     _flag = true;
     componentWillReceiveProps() { 
         setTimeout(()=>{
-            if(!this.props.isAuthenticated && this._flag) {
+            if(!this.props.isAuthenticated && this._flag && this.props.location.pathname != "/signup") {
                 this._flag = false;
                 browserHistory.push('/login');
             } else if(this.props.isAuthenticated && !this._flag) {

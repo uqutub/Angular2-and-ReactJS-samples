@@ -3,35 +3,77 @@ import { ActionsObservable } from "redux-observable";
 import { browserHistory } from 'react-router'; // http://stackoverflow.com/questions/31079081/programmatically-navigate-using-react-router
 
 import AuthActions from "./../action/auth";
+
+// import { HttpService } from "./../../service/index"
+
+import { FirebaseServie } from '../../service/firebaseService';
 import * as firebase from 'firebase';
-import { HttpService } from "./../../service/index";
 
 
 export default class AuthEpic {
+
+    static mainRef = FirebaseServie.mainRef;
 
     static signupEpic = (action$: ActionsObservable<any>) =>
         action$.ofType(AuthActions.SIGNUP)
             // .do(x => { console.log("===-----Epicccccccccccccccccc", x) })
             .switchMap(({payload}) => {
-                // firebase.auth()
-                return HttpService.post(payload.url, payload.body)
-                    .map(({response}) => {
-                        if (response.err) {
+                return Observable.fromPromise(AuthEpic.mainRef.child(`users/${payload.cuid}`).once('value'))
+                    .map(snapshot => {
+                        if (snapshot.val()) {
+                            // console.log('User does exist');
                             return {
                                 type: AuthActions.SIGNUP_FAILER,
-                                payload: null
-                            };
+                                payload: { isError: { status: true, msg: 'user id exists' } }
+                            }
                         } else {
-                            // localStorage.setItem("ngo", JSON.stringify(response.data.data))
-                            browserHistory.push('/login');
+                            // console.log('User does not exist');
                             return {
-                                type: AuthActions.SIGNUP_SUCCESS,
-                                payload: response.data
-                            };
+                                type: AuthActions.CREATEUSER,
+                                payload
+                            }
                         }
                     });
-            })
+            });
 
+    static createrMemberEpic = (action$: ActionsObservable<any>) =>
+        action$.ofType(AuthActions.CREATEUSER)
+            .switchMap(({payload}) => {
+                return Observable.fromPromise(firebase.auth().createUserWithEmailAndPassword(payload.eml, payload.pwd))
+                    .catch(err => {
+                        return Observable.of({
+                            type: AuthActions.SIGNUP_FAILER,
+                            payload: { isError: { status: true, msg: err.message } }
+                        });
+                    })
+                    .map((obj: any) => {
+                        if (obj.type === 'SIGNUP_FAILER') {
+                            return obj;
+                        }
+
+                        obj.updateProfile({
+                            displayName: payload.cuid,
+                            photoURL: 'some/url'
+                        });
+
+                        let uObj = {
+                            fuid: obj.uid,
+                            cuid: payload.cuid,
+                            eml: payload.eml,
+                            pwd: payload.pwd,
+                            type: payload.type,
+                            fname: payload.fname,
+                            lname: payload.lname
+                        };
+                        firebase.database().ref('/').child(`users/${payload.cuid}`).set(uObj);
+                        firebase.database().ref('/').child(`auth/${obj.uid}`).set(uObj);
+                        console.log('ok created user wow!')
+                        return {
+                            type: AuthActions.SIGNUP_SUCCESS,
+                            payload: uObj
+                        }
+                    });
+            });
 
     static isLoggedInEpic = (action$: ActionsObservable<any>) =>
         action$.ofType(AuthActions.ISLOGGEDIN)

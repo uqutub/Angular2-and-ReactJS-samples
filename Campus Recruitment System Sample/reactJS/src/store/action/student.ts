@@ -1,7 +1,5 @@
 import { Action, createAction } from "redux-actions";
 
-// import CONFIG from '../../config/index';
-
 import { store } from '../index';
 
 export default class StudentActions {
@@ -84,7 +82,7 @@ export default class StudentActions {
         })
     }
 
-    
+
 
 
 }
